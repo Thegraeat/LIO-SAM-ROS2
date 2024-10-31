@@ -28,7 +28,7 @@ class GNSSOdom : public ParamServer {
   }
 
  private:
-  void GNSSCB(const sensor_msgs::msg::NavSatFix::ConstSharedPtr &msg) {
+  void GNSSCB(const sensor_msgs::msg::NavSatFix::SharedPtr msg) {
     // gps status
     // std::cout << "gps status: " << msg->status.status << std::endl;
     if (std::isnan(msg->latitude + msg->longitude + msg->altitude)) {

@@ -3,25 +3,25 @@
     use_sim_time: true
 
     # Topics
-    pointCloudTopic: "/sensing/lidar/top/rslidar_sdk/rs/points"                   # Point cloud data
-    imuTopic: "/chc/imu"                        # IMU data
+    pointCloudTopic: "/rslidar_points"                   # Point cloud data
+    imuTopic: "/imu"                        # IMU data
     odomTopic: "odometry/imu"                    # IMU pre-preintegration odometry, same frequency as IMU
-    gpsTopic: "/fix"                    # GPS odometry topic from navsat, see module_navsat.launch file
+    gpsTopic: "/gnss_enu"                    # GPS odometry topic from navsat, see module_navsat.launch file
     gpsOdomTopic: "/gps_odom"
     # Frames
-    lidarFrame: "lidar_link"
+    lidarFrame: "rslidar"
     baselinkFrame: "base_link"
     odometryFrame: "odom"
     mapFrame: "map"
 
     # GPS Settings
     useImuHeadingInitialization: true           # if using GPS data, set to "true"
-    useGpsElevation: true                       # if GPS elevation is bad, set to "false"
+    useGpsElevation: false                       # if GPS elevation is bad, set to "false"
     gpsCovThreshold: 2.0                         # m^2, threshold for using GPS data
     poseCovThreshold: 25.0                       # m^2, threshold for using GPS data
 
     # Export settings
-    savePCD: false                               # https://github.com/TixiaoShan/LIO-SAM/issues/3
+    savePCD: true                               # https://github.com/TixiaoShan/LIO-SAM/issues/3
     savePCDDirectory: "/Downloads/LOAM/"         # in your home folder, starts and ends with "/". Warning: the code deletes "LOAM" folder then recreates it. See "mapOptimization" for implementation
 
     # Sensor Settings
@@ -33,20 +33,20 @@
     lidarMinRange: 1.5                          # default: 1.0, minimum lidar range to be used
     lidarMaxRange: 1000.0                        # default: 1000.0, maximum lidar range to be used
 
+    has_ring: false                              # lidar data format, if lidar driver has ring data publish, set 'ture'
+    ang_bottom: 15.0                             # if 'has_ring' is false, change it
+    ang_res_y: 2.0                               # if 'has_ring' is false, change it
+
     # IMU Settings
-    imuAccNoise: 3.9939570888238808e-03
-    imuGyrNoise: 1.5636343949698187e-03
-    imuAccBiasN: 6.4356659353532566e-05
-    imuGyrBiasN: 3.5640318696367613e-05
-    # imuAccNoise: 5.9215155351791055e-03
-    # imuGyrNoise: 1.5059072284923697e-03
-    # imuAccBiasN: 1.3379378640306186e-04
-    # imuGyrBiasN: 4.3430855283551206e-05
+    imuAccNoise: 7.3970002877392005e-03
+    imuGyrNoise: 3.0773254988611815e-04
+    imuAccBiasN: 1.2845172028737108e-04
+    imuGyrBiasN: 8.8888195353123185e-06
 
     imuGravity: 9.80511
     imuRPYWeight: 0.01
 
-    extrinsicTrans:  [ -0.3,  0.14,  -0.9 ]
+    extrinsicTrans:  [ 0.0,  0.0,  0.0 ]
     extrinsicRot:    [1.0,  0.0,  0.0,
                        0.0,  1.0,  0.0,
                        0.0,  0.0, 1.0 ]
@@ -70,7 +70,7 @@
     rotation_tollerance: 1000.0                   # radians
 
     # CPU Params
-    numberOfCores: 16                              # number of cores for mapping optimization
+    numberOfCores: 4                             # number of cores for mapping optimization
     mappingProcessInterval: 0.15                  # seconds, regulate mapping frequency
 
     # Surrounding map
